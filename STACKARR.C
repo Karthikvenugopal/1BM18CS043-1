@@ -1,4 +1,4 @@
-y#include<conio.h>
+#include<conio.h>
 #include<stdio.h>
 //Karthik Venugopal
 //1BM18CS043
