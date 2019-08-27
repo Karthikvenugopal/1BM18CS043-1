@@ -4,13 +4,12 @@
 #include<stdlib.h>
 void push(char item,char s[100],int *t) ;
 char pop(char s[100],int *t);
-int is_operator(char sym);
 int pre(char sym);
 int main()
 {
 	char infix[20],postfix[20],stack[100];
 	char item,temp;
-	int i=0,j=0;
+	int i=0,t=0;
 	int top=-1;
 	printf("enter infix expression=\n");
 	scanf("%s",infix);
@@ -21,49 +20,44 @@ int main()
 		{
 			push(item,stack,&top);
 		}
-		else if(item>='A'&&item<='Z'||item>='a'&&item<='z')
+		else if(isalnum(item))
 		{
-			postfix[j]=item;
-			j++;
-		}
-		else if(is_operator(item)==1)
-		{
-			  temp=pop(stack,&top);
-			  while(top!=-1&&is_operator(temp)==1&&pre(temp)>=pre(item))
-			  {
-				postfix[j]=temp;
-				j++;
-				temp=pop(stack,&top);
-			  }
-			  push(temp,stack,&top);
-			  push(item,stack,&top);
-
+			postfix[t]=item;
+			t++;
 		}
 		else if(item==')')
 		{
 			temp=pop(stack,&top);
 			while(temp!='(')
 			{
-			postfix[j]=temp;
-			j++;
+			postfix[t]=temp;
+			t++;
 			temp=pop(stack,&top);
 
 			}
 	       }
-	       else
-	       {
-		printf("invalid");
-		exit(0);
-	       }
+		else
+		{
+			  temp=pop(stack,&top);
+			  while(top!=-1&&(temp)>=pre(item))
+			  {
+				postfix[t]=temp;
+				t++;
+				temp=pop(stack,&top);
+			  }
+			  push(temp,stack,&top);
+			  push(item,stack,&top);
+
+		}
 	       i++;
 	}
 	while(top!=-1)
 	{
-		postfix[j]=pop(stack,&top);
-		j++;
+		postfix[t]=pop(stack,&top);
+		t++;
 	}
-	postfix[j]='\0';
-	printf("postfix exp is=%s\n",postfix);
+	postfix[t]='\0';
+	printf("postfix exp is\n%s",postfix);
 	return 0;
 }
 void push(char item,char s[100],int *t)
@@ -75,17 +69,6 @@ void push(char item,char s[100],int *t)
 	*t=*t+1;
 	s[*t]=item;
 }
-int is_operator(char sym)
-{
-	if(sym=='^'||sym=='/'||sym=='+'||sym=='-'||sym=='*')
-	{
-		return 1;
-	}
-	else
-	{
-		return 0;
-	}
-}
 char pop(char s[100],int *t)
 {
 	char item;
@@ -96,12 +79,13 @@ char pop(char s[100],int *t)
 }
 int pre(char sym)
 {
-	if(sym=='^')
-		return 3;
-	else if(sym=='*'||sym=='/')
-		return 2;
-	else if(sym=='+'||sym=='-')
-		return 1;
-	else
-		return 0;
+    switch(sym)
+    {
+	case '^':return 3;
+	case '*':
+	case '/':return 2;
+	case '+':
+	case '-':return 1;
+	default:return 0;
+    }
 }
