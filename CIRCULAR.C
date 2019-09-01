@@ -1,4 +1,3 @@
-#include<conio.h>
 #include<stdio.h>
 #define size 10
 void insert(int q[], int *r,int *f, int item)
@@ -50,7 +49,6 @@ void display(int q[], int *r, int *f)
 int main()
 {
    int q[size],j,r,f,i,n,k=1;
-   clrscr();
    printf("Enter the number of elements:");
    scanf("%d",&n);
    printf("\nEnter the elements of the queue\n");
@@ -81,6 +79,5 @@ int main()
        default:printf("Invalid option\n");
      }
    }
-   getch();
    return 1;
 }
