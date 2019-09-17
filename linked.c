@@ -31,6 +31,7 @@ NODE insert_front(int item, NODE head)
 {
    NODE p = getnode();
    p->data=item;
+   p->next=head;
    head = p;
    return head;
 }
@@ -77,11 +78,11 @@ void display(NODE head)
   if(head == NULL){
   printf("List empty\n");return;
   }
-  printf("LInked list contents are:\n");
-  while(p!= NULL)
+  printf("Linked list contents are:\n");
+  while(p!=NULL)
   {
      printf("%d\n",p->data);
-     p->next;
+     p=p->next;
   }
 }
 int main()
@@ -101,7 +102,7 @@ int main()
       case 0: break;
       case 1: printf("Enter the element\n");
               scanf("%d",&k);
-              insert_front(k,head);
+              head = insert_front(k,head);
               break;
       case 2: printf("Enter the element\n");
               scanf("%d",&k);
